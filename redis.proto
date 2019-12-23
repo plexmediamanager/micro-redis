@@ -1,0 +1,78 @@
+syntax = "proto3";
+package proto;
+
+service RedisService {
+    rpc SetValue(SetRedisObject) returns (RedisEmpty) {}
+    rpc GetValue(GetRedisKey) returns (RedisResultBytes) {}
+    rpc GetValueAllowEmpty(GetRedisKey) returns(RedisResultString) {}
+    rpc GetValueAsInt(GetRedisKey) returns(RedisResultInt) {}
+    rpc GetValueAsInt64(GetRedisKey) returns(RedisResultInt64) {}
+    rpc GetValueAsUInt64(GetRedisKey) returns(RedisResultUInt64) {}
+    rpc GetValueAsFloat32(GetRedisKey) returns(RedisResultFloat32) {}
+    rpc GetValueAsFloat64(GetRedisKey) returns(RedisResultFloat64) {}
+    rpc GetValueAsTime(GetRedisKey) returns(RedisResultUInt64) {}
+    rpc Increment(GetRedisKey) returns(RedisResultInt64) {}
+    rpc IncrementBy(IncrementDecrementRedis) returns(RedisResultInt64) {}
+    rpc Decrement(GetRedisKey) returns(RedisResultInt64) {}
+    rpc DecrementBy(IncrementDecrementRedis) returns(RedisResultInt64) {}
+    rpc Has(GetRedisKey) returns(RedisResultBoolean) {}
+    rpc Remove(GetRedisKeys) returns(RedisResultInt64) {}
+}
+
+message RedisEmpty {}
+
+message Duration {
+    int64 seconds = 1;
+    int32 nanos = 2;
+}
+
+message SetRedisObject {
+    string          key         =   1;
+    string          value       =   2;
+    int64           expiration  =   3;
+}
+
+message IncrementDecrementRedis {
+    string          key         =   1;
+    int64           value       =   2;
+}
+
+message GetRedisKeys {
+    repeated string keys        =   1;
+}
+
+message GetRedisKey {
+    string          key         =   1;
+}
+
+message RedisResultString {
+    string      response    =   1;
+}
+
+message RedisResultFloat32 {
+    float       response    =   1;
+}
+
+message RedisResultFloat64 {
+    double      response    =   1;
+}
+
+message RedisResultInt {
+    int32       response    =   1;
+}
+
+message RedisResultInt64 {
+    int64       response    =   1;
+}
+
+message RedisResultUInt64 {
+    uint64      response    =   1;
+}
+
+message RedisResultBoolean {
+    bool        response    =   1;
+}
+
+message RedisResultBytes {
+    bytes       response    =   1;
+}
